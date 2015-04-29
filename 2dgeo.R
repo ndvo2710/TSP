@@ -1,13 +1,15 @@
+  
   setwd("~/Mat168/allTSP")
   directory = "~/Mat168/allTSP"
-  
-  
   fileList = list.files(path = directory, pattern = ".tsp")
-  data <-sapply(fileList,readLines)
-  test = ""
+  data <- sapply(fileList,readLines)
+  test <- 1:111
   for(i in 1:length(data)){
-    if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D|EDGE_WEIGHT_TYPE: GEO",data[[i]]))  == 0) test[i]=FALSE else test[i]=TRUE
+    if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D|EDGE_WEIGHT_TYPE: GEO",data[[i]]))  == 0) test[i]= 0 else test[i]=i
   }
+  
+  test <- test[test>0] 
+  
   
   
   if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D",data[[2]])) != 0) message("TRUE") else message("FALSE")
