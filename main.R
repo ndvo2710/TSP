@@ -1,12 +1,15 @@
 read_tsp_return_coordinate <- function(x){
-  lines <- readLines(x)
-  metadata <- c(grep(pattern = "[[:alpha:]]" ,lines), which(lines==""))
-  lines <- lines[-metadata]
+  lines <- readLines(x])
+  data_start_point <- (grep("NODE_COORD_SECTION",lines)+1)
+  data_end_point <- (grep("EOF",lines) -1)
+  lines<- lines[data_start_point : data_end_point]
   lines <- sub("^[[:space:]]*", "", lines)
   mycoordinate <- strsplit(paste(lines, collapse = " "), "[[:space:]]+")[[1]]
   mycoordinate <- as.numeric(mycoordinate)
   mycoordinate <- matrix( mycoordinate, ncol = 3, byrow= TRUE)
+  mycoordinate
   return (mycoordinate)}
+
 
 calculateGeoDistance <- function(mycoordinate){
   x <- mycoordinate[,2]

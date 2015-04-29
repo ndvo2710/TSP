@@ -1,5 +1,5 @@
 
-lines <- readLines("S://TSP//TSP//ulysses22.tsp")
+lines <- readLines("burma14.tsp")
 
 metadata <- c(grep(pattern ="[[:alpha:]]" ,lines), which(lines==""))
 index = intersect(metadata,e_lines)
