@@ -1,5 +1,5 @@
 
-lines <- readLines("~/Downloads/ulysses22.tsp")
+lines <- readLines("S://TSP//TSP//ulysses22.tsp")
 
 metadata <- c(grep(pattern ="[[:alpha:]]" ,lines), which(lines==""))
 index = intersect(metadata,e_lines)
@@ -21,15 +21,60 @@ longitude <- pi*(degy + 5*miny/3)/180
 
 RRR <- 6378.388
 
-q1 <-sapply(1:(length(longitude)-1), function(i) cos(longitude[i]-longitude[i+1]))
-q2 <-sapply(1:(length(latitude)-1), function(i) cos(latitude[i]-latitude[i+1]))
-q3 <-sapply(1:(length(latitude)-1), function(i) cos(latitude[i]+latitude[i+1]))
 
-q12 <- sapply(1:length(q1), function(i) (1+q1[i])*q2[i])
-q13 <- sapply(1:length(q1), function(i) (1-q1[i])*q3[i])
-q <- sapply(1:length(q1), function(i) 0.5*(q12[i] - q13[i]))            
-dij <- as.integer(sapply(1:length(q),function(i) (RRR*acos(q[i]) +1)))
 
-sum(dij)
+neighbor_tour <- function(){
+  
+  test = 1
+  neighbor = test
+  neighbors_distance = 0
+  train = 2:length(latitude)
+  while(length(train) != 0){
+    index = closest_distance(train,test)
+    test = index[2]
+    neighbor <- c(neighbor,test)
+    neighbors_distance <- c(neighbors_distance,index[1])
+    train <- train[-which(train == test)]
+  }
+  tour <- data.frame(neighbor,neighbors_distance)
+
+
+}
+
+test = 1
+neighbor = test
+neighbors_distance = 0
+train = 2:length(latitude)
+while(length(train) > 1){
+  index = closest_distance(train,test)
+  test = index[2]
+  neighbor <- c(neighbor,test)
+  neighbors_distance <- c(neighbors_distance,neighbor[1])
+  train <- train[-which(train = test)]
+}
+
+
+
+
+distance <- function(i,j){
+  q1 <-cos(longitude[i]-longitude[j])
+  q2 <-cos(latitude[i]-latitude[j])
+  q3 <-cos(latitude[i]+latitude[j])
+  
+  q12 <- (1+q1)*q2
+  q13 <- (1-q1)*q3
+  q <- 0.5*(q12 - q13)            
+  dij <- as.integer(RRR*acos(q) +1)
+  return (dij)}
+
+closest_distance <- function(train, test){
+  distanceSet =NA
+  for(i in train){
+    distanceSet[i] = distance(test,i)
+  }
+  min_value = min(distanceSet,na.rm = TRUE)
+  index = which(distanceSet == min_value)
+  min_vector <- c(min_value,index)
+  return (min_vector)}
 
 
