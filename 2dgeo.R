@@ -3,23 +3,22 @@
   directory = "~/Mat168/allTSP"
   fileList = list.files(path = directory, pattern = ".tsp")
   data <- sapply(fileList,readLines)
-  test <- 1:111
+  index <- 1:111
   for(i in 1:length(data)){
-    if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D|EDGE_WEIGHT_TYPE: GEO",data[[i]]))  == 0) test[i]= 0 else test[i]=i
+    if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D|EDGE_WEIGHT_TYPE: GEO",data[[i]]))  == 0) index[i]= 0 else index[i]=i
   }
+  selectedIndex <- index[index>0] 
+  selectedData <- data[selectedIndex]
   
-  test <- test[test>0] 
   
   
   
-  if ( length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D",data[[2]])) != 0) message("TRUE") else message("FALSE")
-
+  sapply(1:length(selectedData),function(i) grep(pattern = "NODE_COORD_SECTION", selectedData[[i]]))        
                   
-  length(grep(pattern = "EDGE_WEIGHT_TYPE : EUC_2D|EDGE_WEIGHT_TYPE: GEO",data[[i]]))                
-                  
-                  
-  lines1 <- readLines("ulysses22.tsp")
-  lines2 <- readLines("a280.tsp")
+  
+  
+  
+  lines <- readLines("ulysses22.tsp")
   metadata <- c(grep(pattern = "[[:alpha:]]" ,lines), which(lines==""))
   lines <- lines[-metadata]
   lines <- sub("^[[:space:]]*", "", lines)
