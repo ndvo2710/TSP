@@ -11,6 +11,24 @@
   selectedData <- data[selectedIndex]
   
   
+  read_tsp_return_coordinate <- function(x){
+    if(!(x %in% fileList)) 
+    108
+    4
+    lines <- readLines("a280.tsp")
+    data_start_point <- (grep("NODE_COORD_SECTION",lines)+1)
+    data_end_point <- (grep("EOF",lines) -1)
+    lines<- lines[data_start_point : data_end_point]
+    lines <- sub("^[[:space:]]*", "", lines)
+    mycoordinate <- strsplit(paste(lines, collapse = " "), "[[:space:]]+")[[1]]
+    mycoordinate <- as.numeric(mycoordinate)
+    mycoordinate <- matrix( mycoordinate, ncol = 3, byrow= TRUE)
+    mycoordinate[1:10,]
+    
+    return (mycoordinate)}
+  
+  
+  
   
   
   sapply(1:length(selectedData),function(i) grep(pattern = "NODE_COORD_SECTION", selectedData[[i]]))        
