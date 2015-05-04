@@ -280,7 +280,6 @@ compareTable
 ##################################################
 ##################################################
 ################# BURMA14.TSP ####################
-
 burma = "burma14.tsp" # working file address
 coordinate <- read_tsp_return_coordinate(burma) #read coordinates
 type <- read_type(burma) # read type
