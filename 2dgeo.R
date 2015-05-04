@@ -113,9 +113,6 @@ closest_distance_euc2d <- function(train, test){
   return (min_vector)}
 
 
-
-
-
 getNearest_Neighbor_tour_geo <-function(n){
   index =""
   test = 1
@@ -211,8 +208,7 @@ for (i in (1:length(selectedFiles))){
 
 result <- data.frame(selectedFiles,resultTable_Hamilton, resultTable_Nearest)
 
-
-
+# Processing .opt.tour files
 indexSelectedFiles = rep(0, length(fileOptTour))
 for (i in (1:length(fileOptTour))){
   if (read_type(fileOptTour[i]) == "GEO" |read_type(fileOptTour[i]) == "EUC_2D") indexSelectedFiles[i] = i
@@ -221,7 +217,7 @@ selectedFilesOptTourTsp <- fileOptTour[!is.na(indexSelectedFiles)]
 selectedFilesOptTour <- gsub(".tsp","",selectedFilesOptTourTsp)
 selectedFilesOptTour <- paste(selectedFilesOptTour,".opt.tour",sep ="")
 
-
+#creating a Optimal Tour Table
 resultOpt <- rep(0,length(selectedFilesOptTourTsp) )
 for (i in (1:length(selectedFilesOptTourTsp))){
   tmpTsp = selectedFilesOptTourTsp[i]
